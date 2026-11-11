@@ -202,7 +202,7 @@ function openProductPicker() {
           <div class="can" style="width:36px;height:36px;font-size:13px">${p.mg}</div>
           <div class="r-main"><div class="r-title">${esc(productName(p))}</div><div class="r-sub">${esc(p.flavor || '')} · ${p.mg}mg</div></div>
         </button>`).join('')}
-        <button class="row" data-add><div class="r-main"><div class="r-title" style="color:var(--moss)">+ Add a pouch</div></div></button>
+        <button class="row" data-add><div class="r-main"><div class="r-title" style="color:var(--accent)">+ Add a pouch</div></div></button>
       </div>`;
   }, {
     onMount(api) {
@@ -339,7 +339,7 @@ function barChart(series) {
     ${n > 1 ? `<path class="avg" d="${line}"/>` : ''}
     ${labels}
   </svg>
-  <div class="legend"><span><i style="background:var(--evergreen-hi)"></i>mg per day</span>${n > 1 ? '<span><i style="background:var(--bark-hi)"></i>7-day average</span>' : ''}</div>`;
+  <div class="legend"><span><i style="background:var(--forest-bar)"></i>mg per day</span>${n > 1 ? '<span><i style="background:var(--accent)"></i>7-day average</span>' : ''}</div>`;
 }
 
 function heatmapSVG(grid) {
@@ -354,7 +354,7 @@ function heatmapSVG(grid) {
     for (let h = 0; h < 24; h++) {
       const v = grid[dow][h];
       const o = v ? 0.18 + 0.82 * (v / max) : 0;
-      out += `<rect x="${22 + h * cell + 1}" y="${r * cell + 1}" width="${cell - 2}" height="${cell - 2}" rx="2.5" fill="${v ? `rgba(141,187,155,${o.toFixed(2)})` : 'var(--surface-3)'}"/>`;
+      out += `<rect x="${22 + h * cell + 1}" y="${r * cell + 1}" width="${cell - 2}" height="${cell - 2}" rx="2.5" fill="${v ? `rgba(58,134,90,${o.toFixed(2)})` : 'var(--surface-3)'}"/>`;
     }
   });
   [0, 6, 12, 18].forEach((h) => {
@@ -517,7 +517,7 @@ function renderSettings() {
         <div class="r-sub">${esc(p.flavor || 'No flavor')} · ${p.mg}mg</div></div>
         <div class="r-end">›</div>
       </button>`).join('')}
-      <button class="row" data-act="add-product"><div class="r-main"><div class="r-title" style="color:var(--moss)">+ Add a pouch</div></div></button>
+      <button class="row" data-act="add-product"><div class="r-main"><div class="r-title" style="color:var(--accent)">+ Add a pouch</div></div></button>
     </div>
     ${archived.length ? `<div class="small muted" style="margin:8px 4px">${archived.length} archived pouch${archived.length > 1 ? 'es' : ''} kept for history. <button class="link-btn" data-act="show-archived">Manage</button></div>` : ''}
 
@@ -529,7 +529,7 @@ function renderSettings() {
         <button class="icon-btn" data-act="ctx-rename" data-i="${i}" aria-label="Rename"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button>
         <button class="toggle" role="switch" data-act="ctx-toggle" data-i="${i}" aria-checked="${!c.hidden}" aria-label="Show ${esc(c.name)}"></button>
       </div>`).join('')}
-      <button class="row" data-act="ctx-add"><div class="r-main"><div class="r-title" style="color:var(--moss)">+ Add a context</div></div></button>
+      <button class="row" data-act="ctx-add"><div class="r-main"><div class="r-title" style="color:var(--accent)">+ Add a context</div></div></button>
     </div>
 
     <h2>Backup</h2>
@@ -555,7 +555,7 @@ function openAddProduct({ makeDefault = false } = {}) {
       return `<h3>Add a pouch</h3>
         <div class="list">
           ${ui.library.map((it, i) => `<button class="row" data-lib="${i}"><div class="r-main"><div class="r-title">${esc(it.brand)} ${it.line !== 'Original' ? esc(it.line) : ''}</div><div class="r-sub">${it.strengths.join(', ')} mg</div></div><div class="r-end">›</div></button>`).join('')}
-          <button class="row" data-custom><div class="r-main"><div class="r-title" style="color:var(--moss)">Something else (custom)</div></div></button>
+          <button class="row" data-custom><div class="r-main"><div class="r-title" style="color:var(--accent)">Something else (custom)</div></div></button>
         </div>`;
     }
     if (st.step === 'detail') {

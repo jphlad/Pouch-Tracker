@@ -1,5 +1,5 @@
 // Offline-first service worker. Bump VERSION on every deploy that changes files.
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CACHE = `pouch-tracker-${VERSION}`;
 const ASSETS = [
   './',
