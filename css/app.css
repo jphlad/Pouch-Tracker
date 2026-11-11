@@ -41,7 +41,13 @@ button, .chip, .tab, .seg button { -webkit-user-select: none; user-select: none;
 input, select, textarea { font: inherit; color: inherit; }
 a { color: var(--accent); }
 
-#app { position: relative; z-index: 1; min-height: 100vh; background: var(--bg); box-shadow: 0 -18px 30px rgba(0,0,0,.55); will-change: transform; }
+#app { position: relative; z-index: 1; min-height: 100vh; background: var(--bg); will-change: transform;
+  transition: border-radius .2s ease; }
+/* while the page is pulled down it reads as a sheet sitting in front of the tin layer */
+#app.lifted {
+  border-radius: 26px 26px 0 0;
+  box-shadow: 0 -1px 0 rgba(238, 230, 211, .16), 0 -10px 24px rgba(4, 16, 9, .45);
+}
 #view {
   padding: calc(var(--safe-t) + 14px) var(--pad) calc(var(--tabbar-h) + var(--safe-b) + 28px);
   max-width: 560px;

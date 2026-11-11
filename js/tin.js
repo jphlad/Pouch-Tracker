@@ -4,16 +4,15 @@
 // and lands with the lid facing you at full reach.
 
 const C = {
-  stage: '#0B2416',
-  shadow: '#071A10',
+  stage: '#2F6A49',
   lidFace: '#EEE6D3',
   lidRing: '#D9CEB6',
   lidSide: '#D2C6AB',
   mark: '#2A6646',
-  body: '#24583C',
-  bodyDark: '#1A4430',
-  bottom: '#1E4D34',
-  bottomRing: '#2A6646',
+  body: '#174029',
+  bodyDark: '#113221',
+  bottom: '#1A452D',
+  bottomRing: '#245A3C',
   edge: '#0E2A1B',
 };
 
@@ -51,9 +50,8 @@ export function createTin(page) {
   stage.appendChild(svg);
   document.body.insertBefore(stage, document.body.firstChild);
 
-  const shadow = el('ellipse', { cx: CX, cy: CY + R + 18, rx: 52, ry: 7, fill: C.shadow });
   const g = el('g');
-  svg.append(shadow, g);
+  svg.append(g);
 
   // Face art lives in a group squashed horizontally as the tin turns.
   function lidFace(cx, sx) {
@@ -102,12 +100,11 @@ export function createTin(page) {
         bottomFace(xBack, Math.max(-c, 0.001)),
       );
     }
-    shadow.setAttribute('rx', String(30 + 26 * Math.abs(c) + 8 * Math.abs(s)));
   }
 
   // ---- gesture state ----
   const MAX_D = 250;   // how far the page slides down at full reach
-  const SPINS = 2.25;  // turns completed on the way to full reach
+  const SPINS = 1.25;  // turns completed on the way to full reach
   const TIN_TOP = 40;  // tin position on the stage (px from top); fully clear of the page at full reach
   svg.style.top = `${TIN_TOP}px`;
   let d = 0, mode = 'idle', raf = 0, done = null;
@@ -136,6 +133,7 @@ export function createTin(page) {
     mode = 'idle';
     d = 0;
     page.style.transform = '';
+    page.classList.remove('lifted');
     stage.classList.remove('on');
     if (done) { const r = done; done = null; r(); }
   }
@@ -148,6 +146,7 @@ export function createTin(page) {
       d = Math.min(MAX_D, Math.max(0, dy) * 0.8);
       if (mode === 'idle') {
         stage.classList.add('on');
+        page.classList.add('lifted');
         page.style.transition = 'none';
         cancelAnimationFrame(raf);
         raf = requestAnimationFrame(loop);
