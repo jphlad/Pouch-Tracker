@@ -6,19 +6,17 @@
 const C = {
   stage: '#2F6A49',
   lidFace: '#EEE6D3',
-  lidRing: '#D9CEB6',
   lidSide: '#D2C6AB',
   mark: '#2A6646',
   body: '#174029',
   bodyDark: '#113221',
   bottom: '#1A452D',
-  bottomRing: '#245A3C',
-  edge: '#0E2A1B',
+  seam: '#0E2A1B',
 };
 
 const R = 64;        // tin radius (px)
-const LID_T = 12;    // lid thickness
-const BODY_T = 26;   // body thickness
+const LID_T = 10;    // lid thickness (flush with the body, no lip)
+const BODY_T = 28;   // body thickness
 const TOTAL_T = LID_T + BODY_T;
 const W = 220, H = 170; // svg box
 const CX = W / 2, CY = 74;
@@ -58,7 +56,6 @@ export function createTin(page) {
     const f = el('g', { transform: `translate(${cx} ${CY}) scale(${sx} 1)` });
     f.append(
       el('circle', { r: R, fill: C.lidFace }),
-      el('circle', { r: R * 0.84, fill: 'none', stroke: C.lidRing, 'stroke-width': 4 }),
       el('rect', { x: -R * 0.5, y: -R * 0.25, width: R, height: R * 0.5, rx: R * 0.21, fill: 'none', stroke: C.mark, 'stroke-width': 7 }),
     );
     return f;
@@ -66,8 +63,7 @@ export function createTin(page) {
   function bottomFace(cx, sx) {
     const f = el('g', { transform: `translate(${cx} ${CY}) scale(${sx} 1)` });
     f.append(
-      el('circle', { r: R - 2, fill: C.bottom }),
-      el('circle', { r: R * 0.7, fill: 'none', stroke: C.bottomRing, 'stroke-width': 4 }),
+      el('circle', { r: R, fill: C.bottom }),
     );
     return f;
   }
@@ -85,8 +81,8 @@ export function createTin(page) {
     g.replaceChildren();
     if (c >= 0) {
       g.append(
-        cap(xBack, c, R - 2, C.bodyDark),
-        band(xBack, xLidIn, R - 2, C.body),
+        cap(xBack, c, R, C.bodyDark),
+        band(xBack, xLidIn, R, C.body),
         cap(xLidIn, c, R, C.lidSide),
         band(xLidIn, xFront, R, C.lidSide),
         lidFace(xFront, Math.max(c, 0.001)),
@@ -95,10 +91,19 @@ export function createTin(page) {
       g.append(
         cap(xFront, c, R, C.lidSide),
         band(xFront, xLidIn, R, C.lidSide),
-        cap(xLidIn, c, R - 2, C.bodyDark),
-        band(xLidIn, xBack, R - 2, C.body),
+        cap(xLidIn, c, R, C.bodyDark),
+        band(xLidIn, xBack, R, C.body),
         bottomFace(xBack, Math.max(-c, 0.001)),
       );
+    }
+    // the seam where the lid meets the body: a thin line around the tin, visible on the band
+    const bandSide = c >= 0 ? Math.sign(xBack - xFront) : Math.sign(xFront - xBack);
+    if (Math.abs(s) > 0.04 && bandSide !== 0) {
+      const rx = Math.max(0.01, R * Math.abs(c));
+      g.append(el('path', {
+        d: `M ${xLidIn} ${CY - R} A ${rx} ${R} 0 0 ${bandSide > 0 ? 1 : 0} ${xLidIn} ${CY + R}`,
+        fill: 'none', stroke: C.seam, 'stroke-width': 1.6, 'stroke-linecap': 'round', opacity: 0.85,
+      }));
     }
   }
 
