@@ -18,6 +18,7 @@ A personal nicotine pouch usage tracker. It's an iPhone home-screen web app (PWA
 - `js/io.js`: backup/restore and CSV
 - `data/health-cards.json`: sourced health facts. Edit with care and keep the sources.
 - `data/pouch-library.json`: preloaded brands and strengths
+- `src/tin.src.js` → `js/tin.js`: pull-down tin animation (Three.js). Rebuild with `npm i three && npx esbuild src/tin.src.js --bundle --minify --format=esm --outfile=js/tin.js`
 - `sw.js`: offline cache. **Bump `VERSION` whenever files change.**
 
 ## Tests

@@ -69,8 +69,8 @@ function defaultSettings() {
 function seedProducts() {
   const now = new Date().toISOString();
   return [
-    { id: uid(), brand: 'Velo', line: 'Plus', flavor: 'Spearmint', mg: 9, isFavorite: true, archived: false, createdAt: now },
-    { id: uid(), brand: 'ZYN', line: 'Ultra', flavor: 'Fresh Spearmint', mg: 11, isFavorite: true, archived: false, createdAt: now },
+    { id: uid(), brand: 'Velo', line: 'Plus', flavor: 'Spearmint', mg: 9, nicotineSource: 'synthetic', isFavorite: true, archived: false, createdAt: now },
+    { id: uid(), brand: 'ZYN', line: 'Ultra', flavor: 'Fresh Spearmint', mg: 11, nicotineSource: 'natural', isFavorite: true, archived: false, createdAt: now },
   ];
 }
 

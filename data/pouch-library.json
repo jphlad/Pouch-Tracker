@@ -20,7 +20,8 @@
       "Black Cherry",
       "Peach",
       "Dragonberry"
-    ]
+    ],
+    "nicotineSource": "natural"
   },
   {
     "brand": "ZYN",
@@ -38,7 +39,8 @@
       "Citrus Zest",
       "Chill Mist",
       "Signature Smooth"
-    ]
+    ],
+    "nicotineSource": "natural"
   },
   {
     "brand": "Velo",
@@ -56,7 +58,8 @@
       "Citrus",
       "Dragon Fruit",
       "Smooth"
-    ]
+    ],
+    "nicotineSource": "synthetic"
   },
   {
     "brand": "Velo",
@@ -68,7 +71,8 @@
     "flavors": [
       "Cool Mint",
       "Wintergreen"
-    ]
+    ],
+    "nicotineSource": "natural"
   },
   {
     "brand": "on!",
@@ -86,7 +90,8 @@
       "Berry",
       "Cinnamon",
       "Original"
-    ]
+    ],
+    "nicotineSource": "natural"
   },
   {
     "brand": "Rogue",
@@ -104,7 +109,8 @@
       "Blue Raspberry",
       "Smooth",
       "Bold"
-    ]
+    ],
+    "nicotineSource": "natural"
   },
   {
     "brand": "Rogue",
@@ -119,7 +125,8 @@
       "Wintergreen",
       "Citrus",
       "Blue Raspberry"
-    ]
+    ],
+    "nicotineSource": "natural"
   },
   {
     "brand": "Lucy",
@@ -136,7 +143,8 @@
       "Cinnamon",
       "Mango",
       "Pomegranate"
-    ]
+    ],
+    "nicotineSource": "synthetic"
   },
   {
     "brand": "ALP",
@@ -152,7 +160,8 @@
       "Wintergreen",
       "Tropical Fruit",
       "Citrus"
-    ]
+    ],
+    "nicotineSource": "synthetic"
   },
   {
     "brand": "FRE",
@@ -171,7 +180,8 @@
       "Original",
       "Berries",
       "Melon"
-    ]
+    ],
+    "nicotineSource": "synthetic"
   },
   {
     "brand": "Sesh+",
@@ -188,7 +198,8 @@
       "Mango",
       "Clear",
       "Raspberry Lemon"
-    ]
+    ],
+    "nicotineSource": "synthetic"
   },
   {
     "brand": "Juice Head",
@@ -197,7 +208,8 @@
       6,
       12
     ],
-    "flavors": []
+    "flavors": [],
+    "nicotineSource": "synthetic"
   },
   {
     "brand": "zone",
@@ -206,7 +218,8 @@
       3,
       6
     ],
-    "flavors": []
+    "flavors": [],
+    "nicotineSource": "synthetic"
   },
   {
     "brand": "Grizzly",
@@ -221,6 +234,7 @@
       "Mint",
       "Wintergreen",
       "Watermelon"
-    ]
+    ],
+    "nicotineSource": "synthetic"
   }
 ]

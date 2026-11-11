@@ -1,5 +1,5 @@
 // Offline-first service worker. Bump VERSION on every deploy that changes files.
-const VERSION = 'v5';
+const VERSION = 'v6';
 const CACHE = `pouch-tracker-${VERSION}`;
 const ASSETS = [
   './',
@@ -10,6 +10,7 @@ const ASSETS = [
   'js/stats.js',
   'js/health.js',
   'js/io.js',
+  'js/tin.js',
   'data/health-cards.json',
   'data/pouch-library.json',
   'manifest.webmanifest',

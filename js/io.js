@@ -44,7 +44,7 @@ const csvCell = (v) => {
 
 export function toCSV(entries, products) {
   const pmap = new Map(products.map((p) => [p.id, p]));
-  const rows = [['timestamp', 'local_date', 'local_time', 'brand', 'line', 'flavor', 'mg_per_pouch', 'count', 'total_mg', 'context', 'note']];
+  const rows = [['timestamp', 'local_date', 'local_time', 'brand', 'line', 'flavor', 'nicotine_source', 'mg_per_pouch', 'count', 'total_mg', 'context', 'note']];
   for (const e of [...entries].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))) {
     const p = pmap.get(e.productId) || {};
     const d = new Date(e.timestamp);
@@ -52,7 +52,7 @@ export function toCSV(entries, products) {
       e.timestamp,
       d.toLocaleDateString('en-CA'),
       d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),
-      p.brand, p.line, p.flavor, e.mgPerPouch, e.count, entryMg(e), e.context, e.note || '',
+      p.brand, p.line, p.flavor, p.nicotineSource || '', e.mgPerPouch, e.count, entryMg(e), e.context, e.note || '',
     ]);
   }
   return rows.map((r) => r.map(csvCell).join(',')).join('\n') + '\n';

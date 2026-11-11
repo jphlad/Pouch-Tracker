@@ -19,6 +19,9 @@ const ui = {
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = S.fmtMg;
 
+const SRC = { synthetic: 'Synthetic', natural: 'Natural' };
+const SRC_LONG = { synthetic: 'Synthetic nicotine', natural: 'Natural (tobacco-derived) nicotine' };
+const srcTag = (p) => (p && SRC[p.nicotineSource] ? ` · ${SRC[p.nicotineSource]}` : '');
 const productName = (p) => p ? `${p.brand}${p.line && p.line !== 'Original' ? ' ' + p.line : ''}` : 'Unknown pouch';
 const productLabel = (p) => p ? `${productName(p)} · ${p.flavor || 'No flavor'} · ${p.mg}mg` : 'Unknown pouch';
 const defaultProduct = () => DB.productById(state.settings.defaultProductId) || DB.activeProducts()[0];
@@ -159,7 +162,7 @@ function renderLog() {
       <div class="can">${p ? p.mg : '–'}</div>
       <div class="pc-main">
         <div class="pc-title">${esc(productName(p))}</div>
-        <div class="pc-sub">${p ? `${esc(p.flavor || 'No flavor')} · ${p.mg}mg` : 'Add a pouch to start'}</div>
+        <div class="pc-sub">${p ? `${esc(p.flavor || 'No flavor')} · ${p.mg}mg${srcTag(p)}` : 'Add a pouch to start'}</div>
       </div>
       <div class="pc-change">Change</div>
     </button>
@@ -200,7 +203,7 @@ function openProductPicker() {
       <div class="list">
         ${ps.map((p) => `<button class="row${p.id === state.settings.defaultProductId ? ' selected' : ''}" data-pick="${p.id}">
           <div class="can sm">${p.mg}</div>
-          <div class="r-main"><div class="r-title">${esc(productName(p))}</div><div class="r-sub">${esc(p.flavor || '')} · ${p.mg}mg</div></div>
+          <div class="r-main"><div class="r-title">${esc(productName(p))}</div><div class="r-sub">${esc(p.flavor || '')} · ${p.mg}mg${srcTag(p)}</div></div>
         </button>`).join('')}
         <button class="row" data-add><div class="r-main"><div class="r-title" style="color:var(--accent)">+ Add a pouch</div></div></button>
       </div>`;
@@ -468,6 +471,9 @@ function renderTrends() {
     <h2>Pouch mix</h2>
     <div class="card">${hbars(prod, (i) => `${Math.round(i.share * 100)}% · ${i.pouches}`, 'bark')}</div>
 
+    <h2>Nicotine source</h2>
+    <div class="card">${hbars(S.shareBy(entries, (e) => SRC[DB.productById(e.productId)?.nicotineSource] || 'Not set').map((x) => ({ ...x, label: x.key })), (i) => `${Math.round(i.share * 100)}% · ${fmt(i.mg)}mg`)}</div>
+
     <div class="stat-grid" style="margin-top:12px">
       <div class="stat"><div class="k">Doubled up</div><div class="v">${Math.round(multi * 100)}<small>%</small></div><span class="d">of logs were 2×+</span></div>
       <div class="stat"><div class="k">Pouch time</div><div class="v">${fmt(avgP * S.POUCH_HOURS)}<small>h/day</small></div><span class="d">at ~45 min each</span></div>
@@ -514,7 +520,7 @@ function renderSettings() {
       ${ps.map((p) => `<button class="row" data-act="edit-product" data-id="${p.id}">
         <div class="can sm">${p.mg}</div>
         <div class="r-main"><div class="r-title">${esc(productName(p))}${p.id === s.defaultProductId ? '<span class="badge green">Default</span>' : ''}</div>
-        <div class="r-sub">${esc(p.flavor || 'No flavor')} · ${p.mg}mg</div></div>
+        <div class="r-sub">${esc(p.flavor || 'No flavor')} · ${p.mg}mg${srcTag(p)}</div></div>
         <div class="r-end">›</div>
       </button>`).join('')}
       <button class="row" data-act="add-product"><div class="r-main"><div class="r-title" style="color:var(--accent)">+ Add a pouch</div></div></button>
@@ -549,18 +555,24 @@ function renderSettings() {
 
 /* ================= Product add/edit ================= */
 function openAddProduct({ makeDefault = false } = {}) {
-  const st = { step: 'brand', item: null, mg: null, flavor: '', custom: { brand: '', line: '', flavor: '', mg: '' } };
+  const st = { step: 'brand', filter: 'all', item: null, mg: null, flavor: '', custom: { brand: '', line: '', flavor: '', mg: '', nicotineSource: '' } };
   openSheet(() => {
     if (st.step === 'brand') {
+      const items = ui.library.map((it, i) => ({ it, i })).filter(({ it }) => st.filter === 'all' || it.nicotineSource === st.filter);
       return `<h3>Add a pouch</h3>
+        <div class="seg" role="radiogroup" aria-label="Nicotine source" style="margin:0 0 12px">
+          ${[['all', 'All'], ['synthetic', 'Synthetic'], ['natural', 'Natural']].map(([v, l]) => `<button role="radio" data-filter="${v}" aria-checked="${st.filter === v}">${l}</button>`).join('')}
+        </div>
+        ${st.filter === 'natural' ? '<div class="small muted" style="margin:-4px 2px 10px">Natural = nicotine extracted from the tobacco plant (no tobacco leaf in the pouch).</div>' : st.filter === 'synthetic' ? '<div class="small muted" style="margin:-4px 2px 10px">Synthetic = nicotine made in a lab, not from tobacco. Same molecule, same effects.</div>' : ''}
         <div class="list">
-          ${ui.library.map((it, i) => `<button class="row" data-lib="${i}"><div class="r-main"><div class="r-title">${esc(it.brand)} ${it.line !== 'Original' ? esc(it.line) : ''}</div><div class="r-sub">${it.strengths.join(', ')} mg</div></div><div class="r-end">›</div></button>`).join('')}
+          ${items.map(({ it, i }) => `<button class="row" data-lib="${i}"><div class="r-main"><div class="r-title">${esc(it.brand)} ${it.line !== 'Original' ? esc(it.line) : ''}</div><div class="r-sub">${it.strengths.join(', ')} mg · ${SRC[it.nicotineSource]}</div></div><div class="r-end">›</div></button>`).join('')}
           <button class="row" data-custom><div class="r-main"><div class="r-title" style="color:var(--accent)">Something else (custom)</div></div></button>
         </div>`;
     }
     if (st.step === 'detail') {
       const it = st.item;
       return `<h3>${esc(it.brand)} ${it.line !== 'Original' ? esc(it.line) : ''}</h3>
+        <div class="small muted" style="margin:-8px 2px 6px">${SRC_LONG[it.nicotineSource]}</div>
         <div class="field"><span>Strength</span><div class="pill-row">${it.strengths.map((m) => `<button class="pill" data-mg="${m}" aria-pressed="${st.mg === m}">${m}mg</button>`).join('')}</div></div>
         ${it.flavors.length ? `<div class="field"><span>Flavor</span><div class="pill-row">${it.flavors.map((f) => `<button class="pill" data-fl="${esc(f)}" aria-pressed="${st.flavor === f}">${esc(f)}</button>`).join('')}</div></div>` : ''}
         <label class="field"><span>${it.flavors.length ? 'Or type a flavor' : 'Flavor'}</span><input class="input" data-fl-input value="${esc(it.flavors.includes(st.flavor) ? '' : st.flavor)}" placeholder="e.g. Spearmint"></label>
@@ -572,6 +584,7 @@ function openAddProduct({ makeDefault = false } = {}) {
       <label class="field"><span>Line (optional)</span><input class="input" data-c="line" value="${esc(c.line)}" placeholder="e.g. Exclusive"></label>
       <label class="field"><span>Flavor</span><input class="input" data-c="flavor" value="${esc(c.flavor)}" placeholder="e.g. Ice Cold"></label>
       <label class="field"><span>Nicotine per pouch (mg)</span><input class="input" data-c="mg" value="${esc(c.mg)}" inputmode="decimal" placeholder="e.g. 26"></label>
+      <div class="field"><span>Nicotine source</span><div class="pill-row">${[['synthetic', 'Synthetic'], ['natural', 'Natural (tobacco-derived)'], ['', 'Not sure']].map(([v, l]) => `<button class="pill" data-csrc="${v}" aria-pressed="${c.nicotineSource === v}">${l}</button>`).join('')}</div></div>
       <div class="btn-row"><button class="btn" data-back>Back</button><button class="btn primary" data-save>Add pouch</button></div>`;
   }, {
     onMount(api) {
@@ -581,6 +594,8 @@ function openAddProduct({ makeDefault = false } = {}) {
         if (makeDefault || !state.settings.defaultProductId) { state.settings.defaultProductId = p.id; await DB.saveSettings(); }
         api.close(); render(); toast(`Added ${esc(productLabel(p))}`);
       };
+      b.querySelectorAll('[data-filter]').forEach((x) => x.onclick = () => { st.filter = x.dataset.filter; api.rerender(); });
+      b.querySelectorAll('[data-csrc]').forEach((x) => x.onclick = () => { st.custom.nicotineSource = x.dataset.csrc; api.rerender(); });
       b.querySelectorAll('[data-lib]').forEach((x) => x.onclick = () => {
         st.item = ui.library[Number(x.dataset.lib)];
         st.mg = st.item.strengths.length === 1 ? st.item.strengths[0] : null;
@@ -603,11 +618,11 @@ function openAddProduct({ makeDefault = false } = {}) {
         const now = new Date().toISOString();
         if (st.step === 'detail') {
           if (!st.mg) return;
-          save({ id: DB.uid(), brand: st.item.brand, line: st.item.line, flavor: st.flavor.trim(), mg: st.mg, isFavorite: true, archived: false, createdAt: now });
+          save({ id: DB.uid(), brand: st.item.brand, line: st.item.line, flavor: st.flavor.trim(), mg: st.mg, nicotineSource: st.item.nicotineSource, isFavorite: true, archived: false, createdAt: now });
         } else {
           const mg = parseFloat(String(st.custom.mg).replace(',', '.'));
           if (!st.custom.brand.trim() || !(mg > 0)) { toast('Brand and mg are required'); return; }
-          save({ id: DB.uid(), brand: st.custom.brand.trim(), line: st.custom.line.trim() || 'Original', flavor: st.custom.flavor.trim(), mg, isFavorite: true, archived: false, createdAt: now });
+          save({ id: DB.uid(), brand: st.custom.brand.trim(), line: st.custom.line.trim() || 'Original', flavor: st.custom.flavor.trim(), mg, nicotineSource: st.custom.nicotineSource || null, isFavorite: true, archived: false, createdAt: now });
         }
       };
     },
@@ -622,12 +637,15 @@ function openEditProduct(id) {
     <label class="field"><span>Line</span><input class="input" data-f="line" value="${esc(p.line)}"></label>
     <label class="field"><span>Flavor</span><input class="input" data-f="flavor" value="${esc(p.flavor)}"></label>
     <label class="field"><span>Nicotine per pouch (mg)</span><input class="input" data-f="mg" value="${p.mg}" inputmode="decimal"></label>
+    <label class="field"><span>Nicotine source</span><select class="input" data-f="nicotineSource">
+      ${[['synthetic', 'Synthetic'], ['natural', 'Natural (tobacco-derived)'], ['', 'Not sure']].map(([v, l]) => `<option value="${v}" ${(p.nicotineSource || '') === v ? 'selected' : ''}>${l}</option>`).join('')}
+    </select></label>
     <div class="small muted" style="margin:8px 2px">Changing mg only affects future logs. Past logs keep the strength they were logged with.</div>
     ${p.id !== state.settings.defaultProductId ? `<button class="btn block" style="margin-top:8px" data-default>Make default</button>` : ''}
     <div class="btn-row"><button class="btn danger" data-archive>${p.archived ? 'Restore' : 'Remove'}</button><button class="btn primary" data-save>Save</button></div>`, {
     onMount(api) {
       const b = api.body;
-      b.querySelectorAll('[data-f]').forEach((x) => x.oninput = () => { p[x.dataset.f] = x.value; });
+      b.querySelectorAll('[data-f]').forEach((x) => { x.oninput = x.onchange = () => { p[x.dataset.f] = x.value || (x.dataset.f === 'nicotineSource' ? null : x.value); }; });
       b.querySelector('[data-save]').onclick = async () => {
         const mg = parseFloat(String(p.mg).replace(',', '.'));
         if (!(mg > 0) || !String(p.brand).trim()) { toast('Brand and mg are required'); return; }
@@ -769,6 +787,47 @@ view.addEventListener('click', async (ev) => {
   }
 });
 
+/* ================= Pull-down tin ================= */
+const PULL_DIST = 190;
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let tinMod = null, tin = null, pullStartY = null, pulling = false, lastPull = 0;
+function ensureTin() {
+  if (tinMod) return;
+  tinMod = import('./tin.js').then((m) => {
+    try { tin = m.createTin(); if (pulling) tin.setPull(lastPull); } catch (err) { console.warn('tin unavailable', err); }
+  }).catch((err) => console.warn('tin unavailable', err));
+}
+window.__pt = () => ({ tin: tin && tin.debug, pulling, pullStartY, lastPull });
+const canPull = () => window.scrollY <= 0 && !$('#sheet-root').children.length && !(tin && tin.active && !pulling);
+document.addEventListener('touchstart', (e) => {
+  pullStartY = (e.touches.length === 1 && canPull() && !e.target.closest('.tabbar')) ? e.touches[0].clientY : null;
+  pulling = false;
+}, { passive: true });
+document.addEventListener('touchmove', (e) => {
+  if (pullStartY == null) return;
+  const dy = e.touches[0].clientY - pullStartY;
+  if (!pulling) {
+    if (dy > 8 && window.scrollY <= 0) { pulling = true; ensureTin(); view.style.transition = 'none'; }
+    else if (dy < -4) { pullStartY = null; return; } else return;
+  }
+  e.preventDefault();
+  let p = Math.max(0, dy) / PULL_DIST;
+  if (p > 1) p = 1 + (p - 1) * 0.25; // resistance past the threshold
+  lastPull = p;
+  view.style.transform = `translateY(${Math.min(Math.max(0, dy) * 0.28, 64)}px)`;
+  if (tin) tin.setPull(p);
+}, { passive: false });
+function endPull() {
+  if (!pulling) { pullStartY = null; return; }
+  pulling = false; pullStartY = null;
+  view.style.transition = 'transform .45s cubic-bezier(.2,.9,.25,1)';
+  view.style.transform = '';
+  if (tin) tin.release({ reducedMotion }).then((triggered) => { if (triggered) render(); });
+  else if (lastPull >= 1) render();
+}
+document.addEventListener('touchend', endPull, { passive: true });
+document.addEventListener('touchcancel', endPull, { passive: true });
+
 // keep "last pouch X ago" fresh
 setInterval(() => { if (ui.tab === 'log' && !document.hidden && !$('#sheet-root').children.length) render(); }, 30000);
 document.addEventListener('visibilitychange', () => { if (!document.hidden && ui.tab === 'log') render(); });
@@ -781,6 +840,13 @@ async function boot() {
       DB.load(),
     ]);
     ui.library = lib; ui.cards = cards;
+    for (const p of state.products) {
+      if (p.nicotineSource === undefined) {
+        const m = lib.find((it) => it.brand === p.brand && it.line === p.line);
+        p.nicotineSource = m ? m.nicotineSource : null;
+        DB.upsertProduct(p);
+      }
+    }
   } catch (err) {
     view.innerHTML = `<div class="card" style="margin-top:40px"><b>Couldn't start.</b><div class="muted small" style="margin-top:6px">${esc(err.message)}</div></div>`;
     return;
