@@ -199,7 +199,7 @@ function openProductPicker() {
     return `<h3>Which pouch?</h3>
       <div class="list">
         ${ps.map((p) => `<button class="row${p.id === state.settings.defaultProductId ? ' selected' : ''}" data-pick="${p.id}">
-          <div class="can" style="width:36px;height:36px;font-size:13px">${p.mg}</div>
+          <div class="can sm">${p.mg}</div>
           <div class="r-main"><div class="r-title">${esc(productName(p))}</div><div class="r-sub">${esc(p.flavor || '')} · ${p.mg}mg</div></div>
         </button>`).join('')}
         <button class="row" data-add><div class="r-main"><div class="r-title" style="color:var(--accent)">+ Add a pouch</div></div></button>
@@ -512,7 +512,7 @@ function renderSettings() {
     <h2>My pouches</h2>
     <div class="list">
       ${ps.map((p) => `<button class="row" data-act="edit-product" data-id="${p.id}">
-        <div class="can" style="width:36px;height:36px;font-size:13px">${p.mg}</div>
+        <div class="can sm">${p.mg}</div>
         <div class="r-main"><div class="r-title">${esc(productName(p))}${p.id === s.defaultProductId ? '<span class="badge green">Default</span>' : ''}</div>
         <div class="r-sub">${esc(p.flavor || 'No flavor')} · ${p.mg}mg</div></div>
         <div class="r-end">›</div>

@@ -1,12 +1,12 @@
 :root {
-  --bg: #10301F;
+  --bg: #12351F;
   --surface: #173D29;
   --surface-2: #1C4630;
   --surface-3: #275A3E;
   --evergreen: #2A6646;
   --evergreen-hi: #357A55;
   --forest-bar: #4A8C66;
-  --accent: #E4D6B8;
+  --accent: #EEE6D3;
   --stone: #ACA494;
   --stone-lo: #7F796C;
   --stone-hi: #EEE7D9;
@@ -54,7 +54,7 @@ a { color: var(--accent); }
   display: grid; grid-template-columns: repeat(4, 1fr);
   height: calc(var(--tabbar-h) + var(--safe-b));
   padding-bottom: var(--safe-b);
-  background: rgba(14, 42, 27, 0.92);
+  background: rgba(16, 46, 29, 0.94);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   backdrop-filter: blur(18px) saturate(140%);
   border-top: 1px solid var(--line);
@@ -99,10 +99,12 @@ h2 { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: 
 }
 .product-card:active { transform: scale(0.985); background: var(--surface-2); }
 .can {
-  flex: none; width: 46px; height: 46px; border-radius: 50%;
-  background: var(--evergreen); border: 2px solid var(--evergreen-hi);
-  display: grid; place-items: center; font-family: var(--font-num); font-weight: 700; font-size: 15px; color: var(--accent);
+  flex: none; width: 58px; height: 36px; border-radius: 14px;
+  border: 2.5px solid var(--accent); background: transparent;
+  display: grid; place-items: center;
+  font-family: var(--font-num); font-weight: 700; font-size: 15px; color: var(--accent); letter-spacing: -0.01em;
 }
+.can.sm { width: 48px; height: 30px; border-radius: 12px; border-width: 2px; font-size: 13px; }
 .product-card .pc-main { flex: 1; min-width: 0; }
 .pc-title { font-weight: 600; font-size: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pc-sub { color: var(--stone); font-size: 14px; }
@@ -177,8 +179,8 @@ button.row:active { background: var(--surface-2); }
 
 .nudge {
   display: flex; align-items: center; gap: 12px; margin-top: 16px; padding: 12px 14px;
-  border-radius: 14px; background: rgba(110, 82, 64, 0.22); border: 1px solid rgba(160, 122, 92, 0.35);
-  font-size: 14px; color: #E9D9CB;
+  border-radius: 14px; background: var(--surface-2); border: 1.5px dashed var(--evergreen-hi);
+  font-size: 14px; color: var(--stone-hi);
 }
 .nudge .btn { margin-left: auto; flex: none; }
 
