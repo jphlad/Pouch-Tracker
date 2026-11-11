@@ -2,7 +2,7 @@
 
 A personal nicotine pouch usage tracker. It's an iPhone home-screen web app (PWA) that works offline and keeps all data on the phone. It isn't a quit app. It's for fast logging, honest trends, and health info matched to your actual numbers.
 
-**Live:** https://jphlad.github.io/pouch-tracker/
+**Live:** https://jphlad.github.io/Pouch-Tracker/
 
 ## Install on iPhone
 1. Open the link above in **Safari**.
