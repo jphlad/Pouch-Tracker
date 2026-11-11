@@ -48,6 +48,17 @@ export function createTin(page) {
   stage.appendChild(svg);
   document.body.insertBefore(stage, document.body.firstChild);
 
+  // Edge shading: the side of a cylinder curves top-to-bottom, so light falls off vertically.
+  const defs = el('defs');
+  const grad = (id, stops) => {
+    const lg = el('linearGradient', { id, x1: 0, y1: 0, x2: 0, y2: 1 });
+    stops.forEach(([o, c]) => lg.append(el('stop', { offset: o, 'stop-color': c })));
+    defs.append(lg);
+  };
+  grad('tin-lid-side', [[0, '#E6DCC5'], [0.35, '#D8CCB1'], [0.75, '#C6B898'], [1, '#B0A182']]);
+  grad('tin-body-side', [[0, '#2C6447'], [0.35, '#1F5137'], [0.75, '#16402A'], [1, '#10311F']]);
+  svg.append(defs);
+  svg.setAttribute('shape-rendering', 'geometricPrecision');
   const g = el('g');
   svg.append(g);
 
@@ -67,42 +78,38 @@ export function createTin(page) {
     );
     return f;
   }
-  const band = (x1, x2, r, fill) => el('rect', {
-    x: Math.min(x1, x2), y: CY - r, width: Math.max(0.01, Math.abs(x2 - x1)), height: r * 2, fill,
-  });
-  const cap = (cx, sx, r, fill) => el('ellipse', { cx, cy: CY, rx: Math.max(0.01, r * Math.abs(sx)), ry: r, fill });
+  // One continuous shape for a stretch of the tin's side: the area swept by the disc
+  // between two positions along its axis. Drawing it as a single path (instead of caps +
+  // rectangles) means there are no seams or color breaks as the tin turns.
+  function side(x1, x2, rx, fill) {
+    const a = Math.min(x1, x2) - 0.4, b = Math.max(x1, x2) + 0.4; // tiny overlap hides AA hairlines
+    const r = Math.max(0.01, rx);
+    return el('path', {
+      d: `M ${a} ${CY - R} L ${b} ${CY - R} A ${r} ${R} 0 0 1 ${b} ${CY + R} L ${a} ${CY + R} A ${r} ${R} 0 0 1 ${a} ${CY - R} Z`,
+      fill,
+    });
+  }
 
   // theta = rotation about the vertical axis. 0 = lid facing you.
   function draw(theta) {
     const c = Math.cos(theta), s = Math.sin(theta);
+    const rx = R * Math.abs(c);
     const xFront = CX + (TOTAL_T / 2) * s;           // lid face
     const xLidIn = CX + (TOTAL_T / 2 - LID_T) * s;   // where lid meets body
     const xBack = CX - (TOTAL_T / 2) * s;            // bottom face
+    const lidSide = side(xFront, xLidIn, rx, 'url(#tin-lid-side)');
+    const bodySide = side(xLidIn, xBack, rx, 'url(#tin-body-side)');
     g.replaceChildren();
-    if (c >= 0) {
-      g.append(
-        cap(xBack, c, R, C.bodyDark),
-        band(xBack, xLidIn, R, C.body),
-        cap(xLidIn, c, R, C.lidSide),
-        band(xLidIn, xFront, R, C.lidSide),
-        lidFace(xFront, Math.max(c, 0.001)),
-      );
-    } else {
-      g.append(
-        cap(xFront, c, R, C.lidSide),
-        band(xFront, xLidIn, R, C.lidSide),
-        cap(xLidIn, c, R, C.bodyDark),
-        band(xLidIn, xBack, R, C.body),
-        bottomFace(xBack, Math.max(-c, 0.001)),
-      );
-    }
-    // the seam where the lid meets the body: a thin line around the tin, visible on the band
+    if (c >= 0) g.append(bodySide, lidSide, lidFace(xFront, Math.max(c, 0.001)));
+    else g.append(lidSide, bodySide, bottomFace(xBack, Math.max(-c, 0.001)));
+
+    // the seam where you pry the lid off: a thin line around the tin, on the visible side
     const bandSide = c >= 0 ? Math.sign(xBack - xFront) : Math.sign(xFront - xBack);
-    if (Math.abs(s) > 0.04 && bandSide !== 0) {
-      const rx = Math.max(0.01, R * Math.abs(c));
+    if (Math.abs(s) > 0.12 && bandSide !== 0) {
       g.append(el('path', {
-        d: `M ${xLidIn} ${CY - R} A ${rx} ${R} 0 0 ${bandSide > 0 ? 1 : 0} ${xLidIn} ${CY + R}`,
-        fill: 'none', stroke: C.seam, 'stroke-width': 1.6, 'stroke-linecap': 'round', opacity: 0.85,
+        d: `M ${xLidIn} ${CY - R} A ${Math.max(0.01, rx)} ${R} 0 0 ${bandSide > 0 ? 1 : 0} ${xLidIn} ${CY + R}`,
+        fill: 'none', stroke: '#0E2A1B', 'stroke-width': 1.2, 'stroke-linecap': 'butt', opacity: 0.55,
+        'stroke-dasharray': `0 3 ${Math.PI * R} 3`,
       }));
     }
   }
