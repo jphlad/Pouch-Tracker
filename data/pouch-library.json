@@ -1,0 +1,226 @@
+[
+  {
+    "brand": "ZYN",
+    "line": "Original (mini dry)",
+    "strengths": [
+      3,
+      6
+    ],
+    "flavors": [
+      "Cool Mint",
+      "Spearmint",
+      "Wintergreen",
+      "Peppermint",
+      "Menthol",
+      "Citrus",
+      "Coffee",
+      "Cinnamon",
+      "Chill",
+      "Smooth",
+      "Black Cherry",
+      "Peach",
+      "Dragonberry"
+    ]
+  },
+  {
+    "brand": "ZYN",
+    "line": "Ultra",
+    "strengths": [
+      9,
+      11
+    ],
+    "flavors": [
+      "Fresh Spearmint",
+      "Wintergreen Blast",
+      "Arctic Mint",
+      "Peppermint Frost",
+      "Menthol Ice",
+      "Citrus Zest",
+      "Chill Mist",
+      "Signature Smooth"
+    ]
+  },
+  {
+    "brand": "Velo",
+    "line": "Plus",
+    "strengths": [
+      3,
+      6,
+      9
+    ],
+    "flavors": [
+      "Spearmint",
+      "Wintergreen",
+      "Peppermint",
+      "Cool Mint",
+      "Citrus",
+      "Dragon Fruit",
+      "Smooth"
+    ]
+  },
+  {
+    "brand": "Velo",
+    "line": "Max",
+    "strengths": [
+      8,
+      12
+    ],
+    "flavors": [
+      "Cool Mint",
+      "Wintergreen"
+    ]
+  },
+  {
+    "brand": "on!",
+    "line": "Original",
+    "strengths": [
+      2,
+      4,
+      8
+    ],
+    "flavors": [
+      "Mint",
+      "Wintergreen",
+      "Citrus",
+      "Coffee",
+      "Berry",
+      "Cinnamon",
+      "Original"
+    ]
+  },
+  {
+    "brand": "Rogue",
+    "line": "Original",
+    "strengths": [
+      3,
+      6
+    ],
+    "flavors": [
+      "Wintergreen",
+      "Spearmint",
+      "Peppermint",
+      "Citrus",
+      "Mango",
+      "Blue Raspberry",
+      "Smooth",
+      "Bold"
+    ]
+  },
+  {
+    "brand": "Rogue",
+    "line": "Max",
+    "strengths": [
+      9,
+      12,
+      15
+    ],
+    "flavors": [
+      "Mint",
+      "Wintergreen",
+      "Citrus",
+      "Blue Raspberry"
+    ]
+  },
+  {
+    "brand": "Lucy",
+    "line": "Slim / Breakers",
+    "strengths": [
+      4,
+      8,
+      12
+    ],
+    "flavors": [
+      "Wintergreen",
+      "Spearmint",
+      "Mint",
+      "Cinnamon",
+      "Mango",
+      "Pomegranate"
+    ]
+  },
+  {
+    "brand": "ALP",
+    "line": "Original",
+    "strengths": [
+      3,
+      6,
+      9
+    ],
+    "flavors": [
+      "Classic",
+      "Mint",
+      "Wintergreen",
+      "Tropical Fruit",
+      "Citrus"
+    ]
+  },
+  {
+    "brand": "FRE",
+    "line": "Original",
+    "strengths": [
+      3,
+      6,
+      9,
+      12,
+      15
+    ],
+    "flavors": [
+      "Mint",
+      "Wintergreen",
+      "Sweet",
+      "Original",
+      "Berries",
+      "Melon"
+    ]
+  },
+  {
+    "brand": "Sesh+",
+    "line": "Original",
+    "strengths": [
+      4,
+      6,
+      8
+    ],
+    "flavors": [
+      "Mint",
+      "Wintergreen",
+      "Coffee",
+      "Mango",
+      "Clear",
+      "Raspberry Lemon"
+    ]
+  },
+  {
+    "brand": "Juice Head",
+    "line": "Original",
+    "strengths": [
+      6,
+      12
+    ],
+    "flavors": []
+  },
+  {
+    "brand": "zone",
+    "line": "Original",
+    "strengths": [
+      3,
+      6
+    ],
+    "flavors": []
+  },
+  {
+    "brand": "Grizzly",
+    "line": "Pouches",
+    "strengths": [
+      6,
+      9,
+      12,
+      15
+    ],
+    "flavors": [
+      "Mint",
+      "Wintergreen",
+      "Watermelon"
+    ]
+  }
+]

@@ -1,0 +1,182 @@
+[
+  {
+    "id": "absorption-basics",
+    "trigger": "always",
+    "title": "Label mg isn't what you absorb",
+    "body": "The number on the can is how much nicotine is in the pouch, not how much reaches your blood. In a pharmacokinetic study of ZYN pouches held in for an hour, a bit over half of the nicotine was extracted; older snus studies found closer to 15–20%. Moisture, pouch size, how long it's in, and your own saliva all change it.",
+    "showNumbers": "absorbed_estimate",
+    "source": {
+      "name": "Lunell et al., Nicotine & Tobacco Research (2020)",
+      "url": "https://doi.org/10.1093/ntr/ntaa068"
+    }
+  },
+  {
+    "id": "same-mg-same-dose",
+    "trigger": "always",
+    "title": "Flavor doesn't change the dose",
+    "body": "A clinical study of Velo pouches found that pouches with the same nicotine content delivered similar blood nicotine regardless of flavor, while the higher-mg pouch delivered significantly more. Strength is what matters, which is why this app tracks mg rather than just pouch count.",
+    "source": {
+      "name": "McEwan et al., Contributions to Tobacco & Nicotine Research (2023)",
+      "url": "https://doi.org/10.2478/cttr-2023-0016"
+    }
+  },
+  {
+    "id": "heart-acute",
+    "trigger": "always",
+    "title": "What each pouch does to your heart",
+    "body": "Nicotine triggers adrenaline-like hormones that temporarily raise heart rate and blood pressure, with the effect peaking within minutes of exposure. Studies of higher-strength pouches have shown dose-dependent increases in heart rate and arterial stiffness.",
+    "source": {
+      "name": "Abid et al., Frontiers in Public Health (2025)",
+      "url": "https://doi.org/10.3389/fpubh.2025.1632313"
+    }
+  },
+  {
+    "id": "heart-long-term",
+    "trigger": "band:heavy,very_heavy",
+    "title": "The long-term heart picture is still unclear",
+    "body": "Pouches avoid smoke, but nicotine's cardiovascular effects remain. A 2025 Swedish study of people who quit regular pouch/snus use for 12 weeks didn't see immediate improvement in blood pressure or metabolic markers, so researchers say longer-term data is still needed. Bottom line: the evidence is incomplete, not reassuring either way.",
+    "source": {
+      "name": "af Geijerstam et al., Harm Reduction Journal (2025)",
+      "url": "https://doi.org/10.1186/s12954-025-01195-y"
+    }
+  },
+  {
+    "id": "gums",
+    "trigger": "always",
+    "title": "Your gums take the contact",
+    "body": "The pouch sits against the same gum tissue each time. Reported effects include irritation, lesions where the pouch sits, gum recession, and dry mouth (less saliva means less protection against cavities). Rotating which side you use and watching for a sore that doesn't heal in two weeks are worthwhile.",
+    "source": {
+      "name": "Delta Dental NJ — Nicotine pouches and oral health (2025)",
+      "url": "https://www.deltadentalnj.com/blog/entry/2026/zyns-and-your-oral-health"
+    }
+  },
+  {
+    "id": "gums-heavy",
+    "trigger": "band:heavy,very_heavy",
+    "title": "More pouches, more contact time",
+    "body": "Oral effects scale with exposure: more pouches per day means more hours of tissue contact. At ~45 minutes a pouch, your daily pouch count translates directly into hours against your gums.",
+    "showNumbers": "contact_hours",
+    "source": {
+      "name": "La Rosa et al., Journal of Dentistry (2025) — systematic review",
+      "url": "https://doi.org/10.1016/j.jdent.2025.105910"
+    }
+  },
+  {
+    "id": "brain-25",
+    "trigger": "always",
+    "title": "The under-25 factor",
+    "body": "The CDC and U.S. Surgeon General note the brain keeps developing until about age 25, and nicotine can affect the parts that handle attention, learning, mood, and impulse control. Younger users can also become dependent faster.",
+    "source": {
+      "name": "CDC — Nicotine Pouches",
+      "url": "https://www.cdc.gov/tobacco/nicotine-pouches/index.html"
+    }
+  },
+  {
+    "id": "dependence-band",
+    "trigger": "band:moderate,heavy,very_heavy",
+    "title": "Dependence tracks dose and frequency",
+    "body": "Risk of dependence rises with how often you use and how strong the product is. Signs include tolerance (needing stronger pouches or more of them for the same effect) and withdrawal symptoms like irritability, trouble concentrating, and restlessness when you go without.",
+    "source": {
+      "name": "National Jewish Health — Nicotine pouches and the new wave of addiction",
+      "url": "https://www.nationaljewish.org/education/health-information/smoking-vaping/nicotine-pouches-and-the-new-wave-of-addiction"
+    }
+  },
+  {
+    "id": "light-band",
+    "trigger": "band:light",
+    "title": "Lower range this week",
+    "body": "Your recent average is in the lightest band this app uses. Effects like heart-rate bumps and gum contact still happen per pouch, but cumulative daily exposure is lower than in the higher bands.",
+    "showNumbers": "seven_day_avg",
+    "source": {
+      "name": "Abid et al., Frontiers in Public Health (2025)",
+      "url": "https://doi.org/10.3389/fpubh.2025.1632313"
+    }
+  },
+  {
+    "id": "very-heavy-band",
+    "trigger": "band:very_heavy",
+    "title": "Very high daily exposure",
+    "body": "This is the highest band the app uses. Researchers describe many pouch products as matching or exceeding the nicotine levels of cigarettes, so daily totals add up fast. Nausea, dizziness, a racing heart, or headaches can be signs of taking in too much nicotine.",
+    "showNumbers": "absorbed_estimate",
+    "source": {
+      "name": "Abid et al., Frontiers in Public Health (2025)",
+      "url": "https://doi.org/10.3389/fpubh.2025.1632313"
+    }
+  },
+  {
+    "id": "trend-mg-up",
+    "trigger": "mg_up_20",
+    "title": "Your daily mg is climbing",
+    "body": "Your last two weeks are noticeably above the two weeks before. Gradual creep is how tolerance usually shows up: not a decision, just drift. Worth knowing whether it's a busy stretch or a new baseline.",
+    "showNumbers": "period_change",
+    "source": {
+      "name": "National Jewish Health — Nicotine pouches and the new wave of addiction",
+      "url": "https://www.nationaljewish.org/education/health-information/smoking-vaping/nicotine-pouches-and-the-new-wave-of-addiction"
+    }
+  },
+  {
+    "id": "trend-strength-up",
+    "trigger": "strength_up",
+    "title": "Your average strength went up",
+    "body": "You're reaching for stronger pouches on average than last month. Moving up in strength to get the same feeling is one of the classic signs of tolerance.",
+    "showNumbers": "strength_change",
+    "source": {
+      "name": "National Jewish Health — Nicotine pouches and the new wave of addiction",
+      "url": "https://www.nationaljewish.org/education/health-information/smoking-vaping/nicotine-pouches-and-the-new-wave-of-addiction"
+    }
+  },
+  {
+    "id": "trend-late",
+    "trigger": "late_use",
+    "title": "Late pouches vs. your sleep",
+    "body": "A good share of your nicotine lands after 9pm. Nicotine is a stimulant with a roughly two-hour half-life; studies link it to taking longer to fall asleep and spending less time in deep sleep, and nighttime drops in nicotine can cause lighter, broken sleep in regular users.",
+    "showNumbers": "late_share",
+    "source": {
+      "name": "Jaehne et al., Sleep Medicine Reviews (2009)",
+      "url": "https://doi.org/10.1016/j.smrv.2008.12.003"
+    }
+  },
+  {
+    "id": "trend-early",
+    "trigger": "early_first",
+    "title": "How soon after waking",
+    "body": "How soon someone uses nicotine after waking is one of the standard questions on the Fagerström dependence scale. Earlier first use generally points to stronger dependence. This is just a marker, not a diagnosis.",
+    "showNumbers": "first_pouch_time",
+    "source": {
+      "name": "Fagerström Test for Nicotine Dependence (as used in PMC12377922)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12377922"
+    }
+  },
+  {
+    "id": "trend-multi",
+    "trigger": "multi_pouch",
+    "title": "Doubling up",
+    "body": "Two pouches at once is double the dose arriving in the same window, so the acute heart-rate and blood-pressure bump is bigger than from spacing them out. Studies show these effects increase with dose.",
+    "showNumbers": "multi_share",
+    "source": {
+      "name": "Abid et al., Frontiers in Public Health (2025)",
+      "url": "https://doi.org/10.3389/fpubh.2025.1632313"
+    }
+  },
+  {
+    "id": "trend-idle",
+    "trigger": "idle_context",
+    "title": "Most of it is downtime",
+    "body": "A big share of your use is tagged 'Sitting around.' Use that's tied to cues like boredom or downtime, rather than a specific need, is a common pattern; withdrawal research notes that cravings show up most in familiar situations. Nothing to fix, just a pattern worth seeing.",
+    "showNumbers": "context_share",
+    "source": {
+      "name": "UCHealth — Are nicotine pouches bad for you?",
+      "url": "https://uchealth.org/today/are-nicotine-pouches-bad-for-you/"
+    }
+  },
+  {
+    "id": "not-tobacco-not-nothing",
+    "trigger": "always",
+    "title": "Fewer toxicants, not zero",
+    "body": "Pouches skip combustion and tobacco leaf, so they contain far fewer harmful compounds than cigarettes. But an independent German analysis of 44 pouch products found nitrosamines (a class of carcinogens) in 26 of them, so quality varies by product.",
+    "source": {
+      "name": "UCHealth — Are nicotine pouches bad for you?",
+      "url": "https://uchealth.org/today/are-nicotine-pouches-bad-for-you/"
+    }
+  }
+]

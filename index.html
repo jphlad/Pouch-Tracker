@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#0F1411">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Pouches">
+  <meta name="color-scheme" content="dark">
+  <meta name="format-detection" content="telephone=no">
+  <title>Pouches</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div id="app">
+    <main id="view" aria-live="polite"></main>
+  </div>
+
+  <nav class="tabbar" role="tablist" aria-label="Sections">
+    <button class="tab" data-tab="log" role="tab" aria-label="Log">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v8M8 12h8"/></svg>
+      <span>Log</span>
+    </button>
+    <button class="tab" data-tab="trends" role="tab" aria-label="Trends">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V11M9.33 19V6M14.67 19v-5M20 19V9"/></svg>
+      <span>Trends</span>
+    </button>
+    <button class="tab" data-tab="health" role="tab" aria-label="Health">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 5.65-7 10-7 10z"/></svg>
+      <span>Health</span>
+    </button>
+    <button class="tab" data-tab="settings" role="tab" aria-label="Settings">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+      <span>Settings</span>
+    </button>
+  </nav>
+
+  <div id="sheet-root"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
