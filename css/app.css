@@ -1,18 +1,18 @@
 :root {
-  --bg: #0C1510;
-  --surface: #13201A;
-  --surface-2: #1A2B22;
-  --surface-3: #24382D;
-  --evergreen: #1E4D34;
-  --evergreen-hi: #2B6646;
-  --forest-bar: #2F6E4B;
+  --bg: #10301F;
+  --surface: #173D29;
+  --surface-2: #1C4630;
+  --surface-3: #275A3E;
+  --evergreen: #2A6646;
+  --evergreen-hi: #357A55;
+  --forest-bar: #4A8C66;
   --accent: #E4D6B8;
   --stone: #ACA494;
   --stone-lo: #7F796C;
   --stone-hi: #EEE7D9;
   --bark: #6B4A33;
   --bark-hi: #B88A63;
-  --line: #243429;
+  --line: #285238;
   --danger: #D98B7A;
 
   --radius: 18px;
@@ -54,7 +54,7 @@ a { color: var(--accent); }
   display: grid; grid-template-columns: repeat(4, 1fr);
   height: calc(var(--tabbar-h) + var(--safe-b));
   padding-bottom: var(--safe-b);
-  background: rgba(12, 21, 16, 0.9);
+  background: rgba(14, 42, 27, 0.92);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   backdrop-filter: blur(18px) saturate(140%);
   border-top: 1px solid var(--line);
@@ -127,13 +127,13 @@ h2 { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: 
 .chips { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .chip {
   min-height: 62px; padding: 12px 14px; border-radius: 16px; text-align: left;
-  background: #173A28; border: 1px solid #21503A;
+  background: #1F4C34; border: 1px solid #2C6146;
   font-weight: 600; font-size: 16px; line-height: 1.2;
   display: flex; align-items: center;
   transition: transform .1s ease, background .15s ease, border-color .15s ease;
 }
-.chip:active { transform: scale(0.97); background: var(--evergreen-hi); border-color: #3A7A55; }
-.chip.flash { background: var(--evergreen-hi); border-color: #3A7A55; }
+.chip:active { transform: scale(0.97); background: var(--evergreen-hi); border-color: #4A8C66; }
+.chip.flash { background: var(--evergreen-hi); border-color: #4A8C66; }
 .chip.wide { grid-column: 1 / -1; }
 .chip .ico { width: 22px; height: 22px; margin-right: 10px; flex: none; stroke: var(--accent); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 
@@ -217,7 +217,7 @@ button.row:active { background: var(--surface-2); }
 
 /* ---------- Health ---------- */
 .band-card { background: var(--evergreen); border-color: var(--evergreen-hi); }
-.band-card .muted { color: #C9C2B0; }
+.band-card .muted { color: #D2CBB8; }
 .band-name { font-family: var(--font-num); font-size: 26px; font-weight: 700; }
 .fact { position: relative; }
 .fact h3 { margin: 0 0 6px; font-size: 17px; font-weight: 650; padding-right: 26px; }

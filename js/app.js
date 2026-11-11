@@ -354,7 +354,7 @@ function heatmapSVG(grid) {
     for (let h = 0; h < 24; h++) {
       const v = grid[dow][h];
       const o = v ? 0.18 + 0.82 * (v / max) : 0;
-      out += `<rect x="${22 + h * cell + 1}" y="${r * cell + 1}" width="${cell - 2}" height="${cell - 2}" rx="2.5" fill="${v ? `rgba(58,134,90,${o.toFixed(2)})` : 'var(--surface-3)'}"/>`;
+      out += `<rect x="${22 + h * cell + 1}" y="${r * cell + 1}" width="${cell - 2}" height="${cell - 2}" rx="2.5" fill="${v ? `rgba(214,200,160,${o.toFixed(2)})` : 'var(--surface-3)'}"/>`;
     }
   });
   [0, 6, 12, 18].forEach((h) => {
