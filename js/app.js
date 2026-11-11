@@ -1,6 +1,7 @@
 import * as DB from './db.js';
 import * as S from './stats.js';
 import { selectCards } from './health.js';
+import { createTin } from './tin.js';
 import { buildExport, mergeImport, toCSV, shareOrDownload, validateImport } from './io.js';
 
 const { state } = DB;
@@ -788,42 +789,29 @@ view.addEventListener('click', async (ev) => {
 });
 
 /* ================= Pull-down tin ================= */
-const PULL_DIST = 190;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-let tinMod = null, tin = null, pullStartY = null, pulling = false, lastPull = 0;
-function ensureTin() {
-  if (tinMod) return;
-  tinMod = import('./tin.js').then((m) => {
-    try { tin = m.createTin(); if (pulling) tin.setPull(lastPull); } catch (err) { console.warn('tin unavailable', err); }
-  }).catch((err) => console.warn('tin unavailable', err));
-}
-window.__pt = () => ({ tin: tin && tin.debug, pulling, pullStartY, lastPull });
+let tin = null, pullStartY = null, pulling = false;
+try { tin = createTin($('#app')); } catch (err) { console.warn('tin unavailable', err); }
+window.__pt = () => ({ tin: tin && tin.debug, pulling, pullStartY });
 const canPull = () => window.scrollY <= 0 && !$('#sheet-root').children.length && !(tin && tin.active && !pulling);
 document.addEventListener('touchstart', (e) => {
-  pullStartY = (e.touches.length === 1 && canPull() && !e.target.closest('.tabbar')) ? e.touches[0].clientY : null;
+  pullStartY = (tin && e.touches.length === 1 && canPull() && !e.target.closest('.tabbar')) ? e.touches[0].clientY : null;
   pulling = false;
 }, { passive: true });
 document.addEventListener('touchmove', (e) => {
   if (pullStartY == null) return;
   const dy = e.touches[0].clientY - pullStartY;
   if (!pulling) {
-    if (dy > 8 && window.scrollY <= 0) { pulling = true; ensureTin(); view.style.transition = 'none'; }
+    if (dy > 8 && window.scrollY <= 0) pulling = true;
     else if (dy < -4) { pullStartY = null; return; } else return;
   }
   e.preventDefault();
-  let p = Math.max(0, dy) / PULL_DIST;
-  if (p > 1) p = 1 + (p - 1) * 0.25; // resistance past the threshold
-  lastPull = p;
-  view.style.transform = `translateY(${Math.min(Math.max(0, dy) * 0.28, 64)}px)`;
-  if (tin) tin.setPull(p);
+  tin.drag(dy - 8);
 }, { passive: false });
 function endPull() {
   if (!pulling) { pullStartY = null; return; }
   pulling = false; pullStartY = null;
-  view.style.transition = 'transform .45s cubic-bezier(.2,.9,.25,1)';
-  view.style.transform = '';
-  if (tin) tin.release({ reducedMotion }).then((triggered) => { if (triggered) render(); });
-  else if (lastPull >= 1) render();
+  tin.release({ reducedMotion }).then((triggered) => { if (triggered) render(); });
 }
 document.addEventListener('touchend', endPull, { passive: true });
 document.addEventListener('touchcancel', endPull, { passive: true });

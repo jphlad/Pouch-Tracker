@@ -41,7 +41,7 @@ button, .chip, .tab, .seg button { -webkit-user-select: none; user-select: none;
 input, select, textarea { font: inherit; color: inherit; }
 a { color: var(--accent); }
 
-#app { min-height: 100%; }
+#app { position: relative; z-index: 1; min-height: 100vh; background: var(--bg); box-shadow: 0 -18px 30px rgba(0,0,0,.55); will-change: transform; }
 #view {
   padding: calc(var(--safe-t) + 14px) var(--pad) calc(var(--tabbar-h) + var(--safe-b) + 28px);
   max-width: 560px;
