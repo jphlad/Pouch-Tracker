@@ -1,6 +1,6 @@
 {
-  "name": "Pouch Tracker",
-  "short_name": "Pouches",
+  "name": "Tin",
+  "short_name": "Tin",
   "description": "Personal nicotine pouch usage tracker",
   "start_url": "./",
   "scope": "./",
